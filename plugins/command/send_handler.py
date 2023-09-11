@@ -12,6 +12,10 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     if msg.from_user.is_bot:
         return await msg.reply('Anda tidak diizinkan mengirimkan pesan sebagai bot.', quote=True)
     
+    # Pengecekan apakah pesan mengandung username pengguna saat ini
+    if f"@{msg.from_user.username}" not in msg.text:
+        return await msg.reply('Anda hanya dapat mengirim pesan dengan username Anda sendiri.', quote=True)
+    
     if msg.text or msg.photo or msg.video or msg.voice:
         menfess = user.menfess
         all_menfess = user.all_menfess
