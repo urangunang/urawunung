@@ -69,6 +69,10 @@ async def send_menfess_handler(client: Client, msg: types.Message):
     
     if msg.from_user.is_bot:
         return await msg.reply('Anda tidak diizinkan mengirimkan pesan sebagai bot.', quote=True)
+
+    if f"@{msg.from_user.username}" not in msg.text:
+        return await msg.reply('Anda hanya dapat mengirim pesan dengan username Anda sendiri.', quote=True)
+   
     
     if msg.text or msg.photo or msg.video or msg.voice:
         if msg.photo and not db_bot.photo:
