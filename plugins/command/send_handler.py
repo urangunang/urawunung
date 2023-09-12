@@ -13,13 +13,13 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     if f"@{msg.from_user.username}" not in msg.text:
         return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
     
-    # Pengecekan apakah pengguna adalah admin, daddy sugar, atau talent
-    if user.status not in ['admin', 'daddy sugar', 'talent']:
-        # Pengecekan apakah pesan mengandung username dari daftar admin
-        admin_usernames = ["@OwnNeko", "@Satt329", "@Nekojoyy", "@winnieewwe", "@Mwehehe0j", "@iKeenanDraSW", "@sasaanmf", "@LordMudaId", "@Towirg", "@SuunShiinneee"]
-        for admin_username in admin_usernames:
-            if admin_username in msg.text:
-                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
+    # Pengecekan apakah pesan mengandung username dari daftar admin
+    admin_usernames = ["@OwnNeko", "@Satt329", "@Nekojoyy", "@winnieewwe", "@Mwehehe0j", "@iKeenanDraSW", "@sasaanmf", "@LordMudaId", "@Towirg", "@SuunShiinneee"]
+    is_admin = user.status in ['admin', 'owner', 'daddy sugar', 'talent']
+    is_allowed_username = f"@{msg.from_user.username}" in admin_usernames
+
+    if not is_admin and not is_allowed_username:
+        return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin.', quote=True)
 
     # Pemeriksaan URL
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
