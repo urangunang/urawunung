@@ -12,14 +12,14 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     # Pengecekan apakah pesan mengandung username pengguna saat ini
     if f"@{msg.from_user.username}" not in msg.text:
         return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
-    
-    # Pengecekan apakah pesan mengandung username dari daftar admin
-    admin_usernames = ["@OwnNeko", "@Satt329", "@Nekojoyy", "@winnieewwe", "@Mwehehe0j", "@iKeenanDraSW", "@sasaanmf", "@LordMudaId", "@Towirg", "@SuunShiinneee"]
-    is_admin = user.status in ['admin', 'owner', 'daddy sugar', 'talent']
-    is_allowed_username = f"@{msg.from_user.username}" in admin_usernames
 
-    if not is_admin and not is_allowed_username:
-        return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin.', quote=True)
+    # Pengecekan apakah pengguna memiliki peran admin, daddy sugar, atau talent
+    if user.status not in ['admin', 'daddy sugar', 'talent']:
+        # Pengecekan apakah pesan mengandung username dari daftar admin
+        admin_usernames = ["@OwnNeko", "@Satt329", "@Nekojoyy", "@winnieewwe", "@Mwehehe0j", "@iKeenanDraSW", "@sasaanmf", "@LordMudaId", "@Towirg", "@SuunShiinneee"]
+        for admin_username in admin_usernames:
+            if admin_username in msg.text:
+                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
 
     # Pemeriksaan URL
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
@@ -45,17 +45,10 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
 
         if user.status == 'talent':
             picture = config.pic_talentgirl
-        if user.status == 'owner':
-            picture = config.pic_owner
-        if user.status == 'admin':
-            if key == hastag[0]:
-                picture = config.pic_admingirl
-            elif key == hastag[1]:
-                picture = config.pic_adminboy
         if user.status == 'daddy sugar':
             picture = config.pic_daddysugar
         if user.status == 'boyfriend rent':
-            pictur = config.pic_bfrent
+            picture = config.pic_bfrent
         elif user.status == 'moans boy':
             picture = config.pic_moansboy
 
@@ -93,11 +86,9 @@ async def send_menfess_handler(client: Client, msg: types.Message):
         all_menfess = db_user.all_menfess
         coin = db_user.coin
 
-        # Pengecekan apakah pengguna adalah admin, daddy sugar, atau talent
-        if db_user.status not in ['admin', 'daddy sugar', 'talent']:
-            # Pengecekan apakah pesan mengandung username pengguna saat ini
-            if f"@{msg.from_user.username}" not in msg.text:
-                return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
+        # Pengecekan apakah pesan mengandung username pengguna saat ini
+        if f"@{msg.from_user.username}" not in msg.text:
+            return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
         if menfess >= config.batas_kirim and db_user.status in [
             'member',
