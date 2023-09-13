@@ -13,9 +13,6 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     if f"@{msg.from_user.username}" not in msg.text:
         return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
-    # Pemeriksaan URL Telegram
-    if re.search(r"https?://t\.me/", msg.text or ""):
-        return await msg.reply("Tidak diizinkan mengirimkan tautan Telegram.", quote=True)
 
     # Pemeriksaan URL
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
