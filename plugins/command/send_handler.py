@@ -74,6 +74,15 @@ async def send_menfess_handler(client: Client, msg: types.Message):
     db = Database(msg.from_user.id)
     db_user = db.get_data_pelanggan()
     db_bot = db.get_data_bot(client.id_bot).kirimchannel
+
+    # Pemeriksaan URL
+    if (
+        re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or "") 
+        or "https://t.me/" in msg.text
+    ):
+        return await msg.reply("Tidak diizinkan mengirimkan tautan.", quote=True)
+
+    
     if msg.text or msg.photo or msg.video or msg.voice:
         if msg.photo and not db_bot.photo:
             if db_user.status in ['member', 'talent']:
