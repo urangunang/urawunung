@@ -109,10 +109,6 @@ async def send_menfess_handler(client: Client, msg: types.Message):
     await db.update_menfess(coin, menfess, all_menfess)
     await msg.reply(f"pesan telah berhasil terkirim. hari ini kamu telah mengirim menfess sebanyak {menfess + 1}/{config.batas_kirim} . kamu dapat mengirim menfess sebanyak {config.batas_kirim} kali dalam sehari\n\nwaktu reset setiap jam 1 pagi\n<a href='{link + str(kirim.id)}'>check pesan kamu</a>")
 
-async def get_link():
-    anu = str(config.channel_1).split('-100')[1]
-    return f"https://t.me/c/{anu}/"
-
 
 
 async def get_link():
