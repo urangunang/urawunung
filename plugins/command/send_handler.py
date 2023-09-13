@@ -1,6 +1,5 @@
 import config
 import re
-
 from pyrogram import Client, types, enums
 from plugins import Database, Helper
 
@@ -97,10 +96,18 @@ async def send_menfess_handler(client: Client, msg: types.Message):
         if f"@{msg.from_user.username}" not in msg.text:
             return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
-        if menfess >= config.batas_kirim and db_user.status in [
-            'member',
-            'talent',
-        ]:
+        # Pengecekan apakah pesan mengandung username admin
+        if db_user.status not in ['admin', 'owner', 'talent']:
+            admin_usernames = ["@OwnNeko", "@Satt329", "@Nekojoyy", "@winnieewwe", "@Mwehehe0j", "@iKeenanDraSW", "@sasaanmf", "@LordMudaId", "@Towirg", "@SuunShiinneee"]
+            for admin_username in admin_usernames:
+                if admin_username in msg.text:
+                    return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
+
+        # Pemeriksaan URL
+        if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
+            return await msg.reply("Tidak diizinkan mengirimkan tautan.", quote=True)
+
+        if menfess >= config.batas_kirim and db_user.status in ['member', 'talent']:
             if coin >= config.biaya_kirim:
                 coin = db_user.coin - config.biaya_kirim
             else:
