@@ -92,9 +92,6 @@ async def send_menfess_handler(client: Client, msg: types.Message):
         all_menfess = db_user.all_menfess
         coin = db_user.coin
 
-        # Pengecekan apakah pesan mengandung username pengguna saat ini
-        if f"@{msg.from_user.username}" not in msg.text:
-            return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
         # Pengecekan apakah pesan mengandung username admin
         if db_user.status not in ['admin', 'owner', 'talent']:
