@@ -16,6 +16,11 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
         return await msg.reply("Tidak diizinkan mengirimkan tautan.", quote=True)
 
+        # Pemeriksaan tautan Telegram
+    if "t.me" in msg.text:
+        return await msg.reply("Tidak diizinkan mengirim tautan ke Telegram.", quote=True)
+
+
     if msg.text or msg.photo or msg.video or msg.voice:
         menfess = user.menfess
         all_menfess = user.all_menfess
