@@ -16,6 +16,11 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
         return await msg.reply("Tidak diizinkan mengirimkan tautan.")
 
+    # Pemeriksaan URL Telegram
+    if re.search(r"https?://t\.me/", msg.text or ""):
+    return await msg.reply("Tidak diizinkan mengirimkan tautan.")
+
+
     if msg.text or msg.photo or msg.video or msg.voice:
         menfess = user.menfess
         all_menfess = user.all_menfess
@@ -94,6 +99,16 @@ async def send_menfess_handler(client: Client, msg: types.Message):
                 if username != f"@{msg.from_user.username}":
                     return await msg.reply('Anda hanya diizinkan mencantumkan username Anda sendiri dalam pesan.', quote=True)
 
+    # Pemeriksaan URL
+    if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
+        return await msg.reply("Tidak diizinkan mengirimkan tautan.")
+
+    # Pemeriksaan URL Telegram
+    if re.search(r"https?://t\.me/", msg.text or ""):
+    return await msg.reply("Tidak diizinkan mengirimkan tautan.")
+
+
+        
         if menfess >= config.batas_kirim and db_user.status in [
             'member',
             'talent',
