@@ -78,6 +78,22 @@ async def send_menfess_handler(client: Client, msg: types.Message):
     db = Database(msg.from_user.id)
     db_user = db.get_data_pelanggan()
     db_bot = db.get_data_bot(client.id_bot).kirimchannel
+
+    # Pengecekan apakah pesan mengandung username pengguna saat ini
+    username = f"@{msg.from_user.username}".lower() if msg.from_user.username else None
+    if username and username not in msg.text.lower():
+        return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
+
+    # Cek apakah pengguna adalah owner, admin, talent, atau daddy sugar
+    if user.status not in ['owner', 'admin', 'talent', 'daddy sugar']:
+        # Pengecekan apakah pesan mengandung username dari daftar admin
+        admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee"]
+        for admin_username in admin_usernames:
+            if admin_username in msg.text.lower():
+                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
+
+
+    
     if msg.text or msg.photo or msg.video or msg.voice:
         if msg.photo and not db_bot.photo:
             if db_user.status in ['member', 'talent']:
