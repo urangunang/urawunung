@@ -8,7 +8,7 @@ async def talent_handler(client: Client, msg: types.Message):
     db = Database(msg.from_user.id)
     talent = db.get_data_bot(client.id_bot).talent
     # Hapus pengguna dari daftar talent yang tidak terdaftar dalam database
-    talent = {uid: data for uid, data in talent.items() if await db.cek_user_didatabase(uid)}
+    talent = {uid: data for uid, data in talent_data.items() if await db.cek_user_didatabase()}
 
     
     if len(talent) == 0:
