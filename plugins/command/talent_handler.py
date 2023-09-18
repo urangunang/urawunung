@@ -9,21 +9,6 @@ async def talent_handler(client: Client, msg: types.Message):
     talent = db.get_data_bot(client.id_bot).talent
     if len(talent) == 0:
         return await msg.reply('<b>Saat ini tidak ada talent yang tersedia.</b>', True, enums.ParseMode.HTML)
-    
-    # Buat daftar untuk menyimpan ID pengguna yang harus dihapus
-    users_to_remove = []
-    
-    for uid in talent:
-        if not await db.cek_user_didatabase(uid):
-            users_to_remove.append(uid)
-
-    # Hapus pengguna yang tidak ada dalam database
-    for uid in users_to_remove:
-        talent.pop(uid)
-
-    if len(talent) == 0:
-        return await msg.reply('<b>Saat ini tidak ada talent yang tersedia.</b>', True, enums.ParseMode.HTML)
-
     top_rate = [] # total rate talent
     top_id = [] # id talent
     for uid in talent:
@@ -52,7 +37,6 @@ async def talent_handler(client: Client, msg: types.Message):
     pesan += "Berikan rating untuk talent favoritmu dengan perintah <code>/rate id</code>\n"
     pesan += "Contoh <code>/rate 37339222</code>"
     await msg.reply(pesan, True, enums.ParseMode.HTML)
-
 
 
 async def tambah_talent_handler(client: Client, msg: types.Message):
@@ -238,66 +222,6 @@ async def hapus_talent_handler(client: Client, msg: types.Message):
             )
     else:
         return await msg.reply_text(
-            text=f"<i><a href='tg://openmessage?user_id={str(target)}'>User</a> bukan seorang talent</i>", quote=True,
+            text=f"<i>Terjadi kesalahan, <a href='tg://user?id={str(target)}'>user</a> bukan talent</i>", quote=True,
             parse_mode=enums.ParseMode.HTML
         )
-
-async def rate_talent_handler(client: Client, msg: types.Message):
-    if re.search(r"^[\/]rate(\s|\n)*$", msg.text or msg.caption):
-        return await msg.reply_text(
-            text="perintah salah, gunakan perintah /rate id untuk memberikan rating kepada talent", quote=True,
-            parse_mode=enums.ParseMode.HTML
-        )
-    if x := re.search(r"^[\/]rate(\s|\n)*(\d+)$", msg.text):
-        target = x[2]
-        db = Database(msg.from_user.id)
-        user = db.get_data_pelanggan()
-        db_bot = db.get_data_bot(client.id_bot)
-        my_coin = user.coin
-        if msg.from_user.id == int(target):
-            return await msg.reply('tidak dapat memberi rating kepada diri sendiri', True)
-
-        if target in db_bot.talent:
-            if my_coin <= config.biaya_talent:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_talent)} coin', True)  
-            to_talent = my_coin - config.biaya_talent
-            await db.rate_talent(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 🍓 kepada {target}', True)
-
-        elif target in db_bot.daddy_sugar:
-            if my_coin <= config.biaya_daddy_sugar:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_daddy_sugar)} coin', True)
-            to_talent = my_coin - config.biaya_daddy_sugar
-            await db.rate_sugar_daddy(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 🥂 kepada {target}', True)
-
-        elif target in db_bot.moansgirl:
-            if my_coin <= config.biaya_moansgirl:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_moansgirl)} coin', True)
-            to_talent = my_coin - config.biaya_moansgirl
-            await db.rate_moans_girl(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 🍬 kepada {target}', True)
-
-        elif target in db_bot.moansboy:
-            if my_coin <= config.biaya_moansboy:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_moansboy)} coin', True)
-            to_talent = my_coin - config.biaya_moansboy
-            await db.rate_moans_boy(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 🍥 kepada {target}', True)
-
-        elif target in db_bot.gfrent:
-            if my_coin <= config.biaya_gfrent:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_gfrent)} coin', True)
-            to_talent = my_coin - config.biaya_gfrent
-            await db.rate_gf_rent(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 🌸 kepada {target}', True)
-
-        elif target in db_bot.bfrent:
-            if my_coin <= config.biaya_bfrent:
-                return await msg.reply(f'coin kamu kurang untuk memberikan rating ke talent fwb. biaya rate adalah {str(config.biaya_bfrent)} coin', True)
-            to_talent = my_coin - config.biaya_bfrent
-            await db.rate_bf_rent(target, client.id_bot, to_talent)
-            return await msg.reply(f'kamu berhasil memberikan 1 👓 kepada {target}', True)
-
-        else:
-            await msg.reply(f'{target} bukan seorang talent fwb.', True)
