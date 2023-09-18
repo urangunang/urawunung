@@ -16,10 +16,10 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     # Cek apakah pengguna adalah owner, admin, talent, atau daddy sugar
     if user.status not in ['owner', 'admin', 'talent', 'daddy sugar']:
         # Pengecekan apakah pesan mengandung username dari daftar admin
-        admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee"]
+        admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee", "@kjitten"]
         for admin_username in admin_usernames:
             if admin_username in msg.text.lower():
-                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
+                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username member premium {admin_username}.', quote=True)
 
     # Pemeriksaan URL
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
