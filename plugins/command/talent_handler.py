@@ -9,13 +9,14 @@ async def talent_handler(client: Client, msg: types.Message):
     talent = db.get_data_bot(client.id_bot).talent
     if len(talent) == 0:
         return await msg.reply('<b>Saat ini tidak ada talent yang tersedia.</b>', True, enums.ParseMode.HTML)
-    top_rate = [] # total rate talent
-    top_id = [] # id talent
+    top_rate = []  # Total rate talent
+    top_id = []    # ID talent
     for uid in talent:
-        rate = talent[str(uid)]['rate']
-        if rate >= 0:
-            top_rate.append(rate)
-            top_id.append(uid)
+        if await db.cek_user_didatabase(uid):  # Cek apakah user terdaftar dalam database
+            rate = talent[str(uid)]['rate']
+            if rate >= 0:
+                top_rate.append(rate)
+                top_id.append(uid)
     top_rate.sort(reverse=True)
     pesan = "<b>Daftar Talent NekoMenfess</b>\n\n" + "No — Talent — Rating\n"
     index = 1
@@ -37,6 +38,9 @@ async def talent_handler(client: Client, msg: types.Message):
     pesan += "Berikan rating untuk talent favoritmu dengan perintah <code>/rate id</code>\n"
     pesan += "Contoh <code>/rate 37339222</code>"
     await msg.reply(pesan, True, enums.ParseMode.HTML)
+
+# Fungsi-fungsi lainnya seperti tambah_talent_handler, hapus_talent_handler, dan rate_talent_handler
+
 
 
 async def tambah_talent_handler(client: Client, msg: types.Message):
