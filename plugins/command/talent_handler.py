@@ -7,6 +7,10 @@ from plugins import Database, Helper
 async def talent_handler(client: Client, msg: types.Message):
     db = Database(msg.from_user.id)
     talent = db.get_data_bot(client.id_bot).talent
+    # Hapus pengguna dari daftar talent yang tidak terdaftar dalam database
+    talent = {uid: data for uid, data in talent.items() if await db.cek_user_didatabase(uid)}
+
+    
     if len(talent) == 0:
         return await msg.reply('<b>Saat ini tidak ada talent yang tersedia.</b>', True, enums.ParseMode.HTML)
     top_rate = [] # total rate talent
