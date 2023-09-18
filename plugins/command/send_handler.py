@@ -93,6 +93,10 @@ async def send_menfess_handler(client: Client, msg: types.Message):
         all_menfess = db_user.all_menfess
         coin = db_user.coin
 
+    # Pemeriksaan URL
+    if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
+        return await msg.reply("Tidak diizinkan mengirimkan tautan.")
+
 
         # Pengecekan apakah pesan mengandung username admin
         if db_user.status not in ['admin', 'owner', 'talent']:
@@ -110,6 +114,11 @@ async def send_menfess_handler(client: Client, msg: types.Message):
             else:
                 return await msg.reply(f'🙅🏻‍♀️ post gagal terkirim. kamu hari ini telah mengirim ke menfess sebanyak {menfess}/{config.batas_kirim} kali.serta coin mu kurang untuk mengirim menfess diluar batas harian., kamu dapat mengirim menfess kembali pada hari esok.\n\n waktu reset jam 1 pagi. \n\n\n\n Info: Topup Coin Hanya ke @OwnNeko', quote=True)
 
+        # Remove URLs from caption
+        caption = re.sub(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", "", caption)
+
+
+        
         link = await get_link()
         kirim = await client.copy_message(config.channel_1, msg.from_user.id, msg.id)
         await helper.send_to_channel_log(type="log_channel", link=link + str(kirim.id))
