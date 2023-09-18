@@ -6,14 +6,14 @@ from plugins import Database, Helper
 
 async def talent_handler(client: Client, msg: types.Message):
     db = Database(msg.from_user.id)
-    talent = db.get_data_bot(client.id_bot).talent
+    talent = db.get_active_talent(client.id_bot)  # Mengambil hanya talent dengan akun aktif
     if len(talent) == 0:
         return await msg.reply('<b>Saat ini tidak ada talent yang tersedia.</b>', True, enums.ParseMode.HTML)
     top_rate = [] # total rate talent
     top_id = [] # id talent
-    for uid in talent:
-        rate = talent[str(uid)]['rate']
-        if rate >= 0:
+    for uid, data in talent.items():
+        rate = data['rate']
+        if rate >= 0 and not data['deleted']:  # Hanya tambahkan akun yang tidak terhapus
             top_rate.append(rate)
             top_id.append(uid)
     top_rate.sort(reverse=True)
@@ -37,6 +37,7 @@ async def talent_handler(client: Client, msg: types.Message):
     pesan += "Berikan rating untuk talent favoritmu dengan perintah <code>/rate id</code>\n"
     pesan += "Contoh <code>/rate 37339222</code>"
     await msg.reply(pesan, True, enums.ParseMode.HTML)
+
 
 
 async def tambah_talent_handler(client: Client, msg: types.Message):
