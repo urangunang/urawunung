@@ -25,6 +25,7 @@ batas_moansgirl = int(os.environ.get("BATAS_MOANSGIRL", "3"))
 batas_moansboy = int(os.environ.get("BATAS_MOANSBOY", "3"))
 batas_gfrent = int(os.environ.get("BATAS_GFRENT", "3"))
 batas_bfrent = int(os.environ.get("BATAS_BFRENT", "3"))
+batas_partnership = int(os.environ.get("BATAS_PARTNERSHIP", "3"))
 # =========================================================== #
 
 biaya_kirim = int(os.environ.get("BIAYA_KIRIM", "10"))
@@ -34,6 +35,7 @@ biaya_moansgirl = int(os.environ.get("BIAYA_MOANSGIRL", "10"))
 biaya_moansboy = int(os.environ.get("BIAYA_MOANSBOY", "10"))
 biaya_gfrent = int(os.environ.get("BIAYA_GFRENT", "10"))
 biaya_bfrent = int(os.environ.get("BIAYA_BFRENT", "10"))
+biaya_partnership = int(os.environ.get("BIAYA_PARTNERSHIP", "4"))
 # =========================================================== #
 
 hastag = os.environ.get("HASTAG", "#NekoGirl #NekoBoy #NekoAsk #NekoFind #NekoSpill #NekoStory #NekoTalent").replace(" ", "|").lower()
@@ -51,6 +53,7 @@ pic_owner = os.environ.get("PIC_OWNER" , "https://telegra.ph/file/f58b957f34a978
 pic_neko = os.environ.get("PIC_NEKO" , "https://telegra.ph/file/2d46007dd7d22645c4ec3.jpg")
 pic_admingirl = os.environ.get("PIC_ADMINGIRL" , "https://telegra.ph/file/30c7b36f68d69840a762c.jpg")
 pic_adminboy = os.environ.get("PIC_ADMINBOY" , "https://telegra.ph/file/192be803ec6722b3935ab.jpg")
+pic_partnership = os.enbiron.get("PIC_PARTNERSHIP" , "_____")
 # ============================================================#
 pic_rekberboy = os.environ.get("PIC_REKBERBOY", "https://telegra.ph/file/78acf322385616cb5bab0.jpg")
 
