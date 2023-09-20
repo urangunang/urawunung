@@ -1,4 +1,4 @@
-import os
+luimport os
 
 api_id = int(os.environ.get("API_ID", "24465982"))
 api_hash = os.environ.get("API_HASH", "2b3131b7d3f6a42bd4ae1ba3b58c11c4")
@@ -53,7 +53,7 @@ pic_owner = os.environ.get("PIC_OWNER" , "https://telegra.ph/file/f58b957f34a978
 pic_neko = os.environ.get("PIC_NEKO" , "https://telegra.ph/file/2d46007dd7d22645c4ec3.jpg")
 pic_admingirl = os.environ.get("PIC_ADMINGIRL" , "https://telegra.ph/file/30c7b36f68d69840a762c.jpg")
 pic_adminboy = os.environ.get("PIC_ADMINBOY" , "https://telegra.ph/file/192be803ec6722b3935ab.jpg")
-pic_partnership = os.enbiron.get("PIC_PARTNERSHIP" , "_____")
+pic_partnership = os.enbiron.get("PIC_PARTNERSHIP" , "")
 # ============================================================#
 pic_rekberboy = os.environ.get("PIC_REKBERBOY", "https://telegra.ph/file/78acf322385616cb5bab0.jpg")
 
