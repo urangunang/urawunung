@@ -25,7 +25,6 @@ batas_moansgirl = int(os.environ.get("BATAS_MOANSGIRL", "3"))
 batas_moansboy = int(os.environ.get("BATAS_MOANSBOY", "3"))
 batas_gfrent = int(os.environ.get("BATAS_GFRENT", "3"))
 batas_bfrent = int(os.environ.get("BATAS_BFRENT", "3"))
-batas_partnership = int(os.environ.get("BATAS_PARTNERSHIP", "3"))
 # =========================================================== #
 
 biaya_kirim = int(os.environ.get("BIAYA_KIRIM", "10"))
@@ -35,7 +34,6 @@ biaya_moansgirl = int(os.environ.get("BIAYA_MOANSGIRL", "10"))
 biaya_moansboy = int(os.environ.get("BIAYA_MOANSBOY", "10"))
 biaya_gfrent = int(os.environ.get("BIAYA_GFRENT", "10"))
 biaya_bfrent = int(os.environ.get("BIAYA_BFRENT", "10"))
-biaya_partnership = int(os.environ.get("BIAYA_PARTNERSHIP", "4"))
 # =========================================================== #
 
 hastag = os.environ.get("HASTAG", "#NekoGirl #NekoBoy #NekoAsk #NekoFind #NekoSpill #NekoStory #NekoTalent").replace(" ", "|").lower()
