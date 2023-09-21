@@ -36,7 +36,7 @@ biaya_gfrent = int(os.environ.get("BIAYA_GFRENT", "10"))
 biaya_bfrent = int(os.environ.get("BIAYA_BFRENT", "10"))
 # =========================================================== #
 
-hastag = os.environ.get("HASTAG", "#NekoGirl #NekoBoy #NekoAsk #NekoFind #NekoSpill #NekoStory #NekoTalent").replace(" ", "|").lower()
+hastag = os.environ.get("HASTAG", "#RawGirl #RawBoy #RawAsk #RawFind #RawSpill #RawStory #RawTalent").replace(" ", "|").lower()
 # =========================================================== #
 
 pic_boy = os.environ.get("PIC_BOY", "https://telegra.ph/file/cc5661536f41af961c5c4.jpg")
@@ -60,20 +60,20 @@ pesan_join = os.environ.get("PESAN_JOIN", "Tidak dapat diakses harap join terleb
 start_msg = os.environ.get("START_MSG", """"
 {mention},Silahkan gunakan hastag:
 
-#NekoBoy / #NekoGirl untuk Mencari Pasangan,Teman , Partner dll
-#NekoAsk untuk Bertanya
-#NekoStory untuk Berbagi Cerita
-#NekoSpill untuk Spill Masalah
-#NekoFind untuk Mencari Pasangan, Teman, Partner dll
+#RawBoy / #RawGirl untuk Mencari Pasangan,Teman , Partner dll
+#RawAsk untuk Bertanya
+#RawStory untuk Berbagi Cerita
+#RawSpill untuk Spill Masalah
+#RawFind untuk Mencari Pasangan, Teman, Partner dll
 
 {fullname} 🌱\n\nIni adalah bot menfess, semua pesan yang kamu kirim akan masuk ke channel secara anonymous. ketik /help""")
 
 gagalkirim_msg = os.environ.get("GAGAL_KIRIM", """
 {mention}, pesan mu gagal terkirim silahkan gunakan hastag:
 
-#NekoBoy / #NekoGirl untuk Mencari Pasangan, Teman , Partner dll
-#NekoAsk untuk Bertanya
-#NekoStory untuk Berbagi Cerita
-#NekoSpill untuk Spill Masalah
-#NekoFind untuk Mencari Pasangan, Teman, Partner dll
+#RawBoy / #RawGirl untuk Mencari Pasangan, Teman , Partner dll
+#RawAsk untuk Bertanya
+#RawStory untuk Berbagi Cerita
+#RawSpill untuk Spill Masalah
+#RawFind untuk Mencari Pasangan, Teman, Partner dll
 """)
