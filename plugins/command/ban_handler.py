@@ -114,8 +114,9 @@ async def cek_handler(client: Client, msg: types.Message):
     user_data = db.get_data_pelanggan()
     ban_reason = db.get_data_bot(client.id_bot).ban.get(target, "Tidak ada alasan yang tersedia.")
     
-    # Memeriksa peran pengguna sebelum menampilkan data
-    if user_data.status not in ['member', 'admin', 'owner', 'talent']:
+    # Check user role and allow only owner, admin, talent, and member to see data
+    allowed_roles = ['owner', 'admin', 'talent', 'member']
+    if user_data.status not in allowed_roles:
         return await msg.reply_text(
             text="<i>Anda tidak memiliki izin untuk melihat data pengguna ini.</i>",
             quote=True,
@@ -127,6 +128,7 @@ async def cek_handler(client: Client, msg: types.Message):
         quote=True,
         parse_mode=enums.ParseMode.HTML
     )
+
 
 
 async def get_user_mention(user_id: str, client: Client):
