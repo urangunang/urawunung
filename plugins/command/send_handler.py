@@ -43,21 +43,7 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
         elif key == hastag[1]:
             picture = config.pic_boy
 
-        if user.status == 'talent':
-            picture = config.pic_talentgirl
-        if user.status == 'owner':
-            picture = config.pic_owner
-        if user.status == 'admin':
-            if key == hastag[0]:
-                picture = config.pic_admingirl
-            elif key == hastag[1]:
-                picture = config.pic_adminboy
-        if user.status == 'daddy sugar':
-            picture = config.pic_daddysugar
-        if user.status == 'boyfriend rent':
-            picture = config.pic_bfrent
-        elif user.status == 'moans boy':
-            picture = config.pic_moansboy
+
 
         link = await get_link()
         caption = msg.text or msg.caption
@@ -73,27 +59,12 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     else:
         await msg.reply('media yang didukung photo, video dan voice')
 
+
 async def send_menfess_handler(client: Client, msg: types.Message):
     helper = Helper(client, msg)
     db = Database(msg.from_user.id)
     db_user = db.get_data_pelanggan()
     db_bot = db.get_data_bot(client.id_bot).kirimchannel
-
-    # Pengecekan apakah pesan mengandung username pengguna saat ini
-    username = f"@{msg.from_user.username}".lower() if msg.from_user.username else None
-    if username and username not in msg.text.lower():
-        return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
-
-    # Cek apakah pengguna adalah owner, admin, talent, atau daddy sugar
-    if user.status not in ['owner', 'admin', 'talent', 'daddy sugar']:
-        # Pengecekan apakah pesan mengandung username dari daftar admin
-        admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee"]
-        for admin_username in admin_usernames:
-            if admin_username in msg.text.lower():
-                return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
-
-
-    
     if msg.text or msg.photo or msg.video or msg.voice:
         if msg.photo and not db_bot.photo:
             if db_user.status in ['member', 'talent']:
@@ -102,25 +73,11 @@ async def send_menfess_handler(client: Client, msg: types.Message):
             if db_user.status in ['member', 'talent']:
                 return await msg.reply('Tidak bisa mengirim video, karena sedang dinonaktifkan oleh admin', True)
         elif msg.voice and not db_bot.voice:
-            if db_user.status in ['member', 'talent']:
-                return await msg.reply('Tidak bisa mengirim voice, karena sedang dinonaktifkan oleh admin', True)
+            return await msg.reply('Tidak bisa mengirim voice, karena sedang dinonaktifkan oleh admin', True)
 
         menfess = db_user.menfess
         all_menfess = db_user.all_menfess
         coin = db_user.coin
-
-    # Pemeriksaan URL
-    if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
-        return await msg.reply("Tidak diizinkan mengirimkan tautan.")
-
-
-        # Pengecekan apakah pesan mengandung username admin
-        if db_user.status not in ['admin', 'owner', 'talent']:
-            admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee"]
-            for admin_username in admin_usernames:
-                if admin_username in msg.text.lower():
-                    return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username admin {admin_username}.', quote=True)
-
         if menfess >= config.batas_kirim and db_user.status in [
             'member',
             'talent',
@@ -128,22 +85,34 @@ async def send_menfess_handler(client: Client, msg: types.Message):
             if coin >= config.biaya_kirim:
                 coin = db_user.coin - config.biaya_kirim
             else:
-                return await msg.reply(f'🙅🏻‍♀️ post gagal terkirim. kamu hari ini telah mengirim ke menfess sebanyak {menfess}/{config.batas_kirim} kali.serta coin mu kurang untuk mengirim menfess diluar batas harian., kamu dapat mengirim menfess kembali pada hari esok.\n\n waktu reset jam 1 pagi. \n\n\n\n Info: Topup Coin Hanya ke @OwnNeko', quote=True)
+                return await msg.reply(f'🙅🏻‍♀️ post gagal terkirim. kamu hari ini telah mengirim ke menfess sebanyak {menfess}/{config.batas_kirim} kali.serta coin mu kurang untuk mengirim menfess diluar batas harian., kamu dapat mengirim menfess kembali pada hari esok.\n\n waktu reset jam 1 pagi', quote=True)
 
-        # Remove URLs from caption
-        caption = re.sub(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", "", caption)
-
-
-        
         link = await get_link()
+
+        # Check if the message mentions the sender's username
+        username = f"@{msg.from_user.username}".lower() if msg.from_user.username else None
+        if username:
+            if username not in msg.text.lower():
+                return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
+        else:
+            # If no username mentioned, proceed to send the message
+            pass
+
+        # Use regular expression to check for links in the message
+        if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
+            return await msg.reply("Tidak diizinkan mengirimkan tautan.", quote=True)
+
         kirim = await client.copy_message(config.channel_1, msg.from_user.id, msg.id)
         await helper.send_to_channel_log(type="log_channel", link=link + str(kirim.id))
         await db.update_menfess(coin, menfess, all_menfess)
         await msg.reply(f"pesan telah berhasil terkirim. hari ini kamu telah mengirim menfess sebanyak {menfess + 1}/{config.batas_kirim} . kamu dapat mengirim menfess sebanyak {config.batas_kirim} kali dalam sehari\n\nwaktu reset setiap jam 1 pagi\n<a href='{link + str(kirim.id)}'>check pesan kamu</a>")
+    else:
+        await msg.reply('media yang didukung photo, video dan voice')
 
 async def get_link():
     anu = str(config.channel_1).split('-100')[1]
     return f"https://t.me/c/{anu}/"
+
 
 async def transfer_coin_handler(client: Client, msg: types.Message):
     if re.search(r"^[\/]tf_coin(\s|\n)*$", msg.text or msg.caption):
