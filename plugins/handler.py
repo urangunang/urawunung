@@ -1,6 +1,6 @@
 import re
 from pyrogram import Client, enums, types
-from plugins import Database, Helper, config
+from plugins import Database, Helper
 
 @Client.on_message(filters.private)
 async def on_private_message(client, msg):
