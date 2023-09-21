@@ -39,8 +39,8 @@ biaya_bfrent = int(os.environ.get("BIAYA_BFRENT", "10"))
 hastag = os.environ.get("HASTAG", "#NekoGirl #NekoBoy #NekoAsk #NekoFind #NekoSpill #NekoStory #NekoTalent").replace(" ", "|").lower()
 # =========================================================== #
 
-pic_boy = os.environ.get("PIC_BOY", "https://telegra.ph/file/387bdabb03deaf94fa4e9.jpg")
-pic_girl = os.environ.get("PIC_GIRL", "https://telegra.ph/file/2bc2dc1fad8e33cf69e6d.jpg")
+pic_boy = os.environ.get("PIC_BOY", "https://telegra.ph/file/cc5661536f41af961c5c4.jpg")
+pic_girl = os.environ.get("PIC_GIRL", "https://telegra.ph/file/5c777c4e5b29e42c430c0.jpg")
 pic_talentgirl = os.environ.get("PIC_TALENTGIRL", "https://telegra.ph/file/95801451d752f089f8e1e.jpg")
 pic_daddysugar = os.environ.get("PIC_DADDYSUGAR", "https://telegra.ph/file/14ca710511333621be61d.jpg")
 pic_moansgirl = os.environ.get("PIC_MOANSGIRL" , "https://telegra.ph/file/10232ac2404b3e822f99d.jpg")
