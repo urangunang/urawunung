@@ -70,8 +70,6 @@ async def send_menfess_handler(client: Client, msg: types.Message):
     if username and username not in msg.text.lower():
         return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
-    # Cek apakah pengguna adalah owner, admin, talent, atau daddy sugar
-    if user.status not in ['owner', 'admin', 'talent', 'daddy sugar']:
         # Pengecekan apakah pesan mengandung username dari daftar admin
         admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee"]
         for admin_username in admin_usernames:
