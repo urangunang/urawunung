@@ -72,8 +72,7 @@ async def send_menfess_handler(client: Client, msg: types.Message):
             if db_user.status in ['member', 'talent']:
                 return await msg.reply('Tidak bisa mengirim video, karena sedang dinonaktifkan oleh admin', True)
         elif msg.voice and not db_bot.voice:
-            if db_user.status in ['member', 'talent']:
-                return await msg.reply('Tidak bisa mengirim voice, karena sedang dinonaktifkan oleh admin', True)
+            return await msg.reply('Tidak bisa mengirim voice, karena sedang dinonaktifkan oleh admin', True)
 
         menfess = db_user.menfess
         all_menfess = db_user.all_menfess
@@ -87,8 +86,13 @@ async def send_menfess_handler(client: Client, msg: types.Message):
             else:
                 return await msg.reply(f'🙅🏻‍♀️ post gagal terkirim. kamu hari ini telah mengirim ke menfess sebanyak {menfess}/{config.batas_kirim} kali.serta coin mu kurang untuk mengirim menfess diluar batas harian., kamu dapat mengirim menfess kembali pada hari esok.\n\n waktu reset jam 1 pagi', quote=True)
 
-      
         link = await get_link()
+
+        # Check if the message mentions the sender's username
+        username = f"@{msg.from_user.username}".lower() if msg.from_user.username else None
+        if username and username in msg.text.lower():
+            return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
+
         kirim = await client.copy_message(config.channel_1, msg.from_user.id, msg.id)
         await helper.send_to_channel_log(type="log_channel", link=link + str(kirim.id))
         await db.update_menfess(coin, menfess, all_menfess)
