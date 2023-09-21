@@ -42,9 +42,10 @@ async def status_handler(client: Client, msg: types.Message):
     pesan += f'├Coin : {helper.formatrupiah(db.coin)}💰\n'
     pesan += f'├Menfess : {db.menfess}/{config.batas_kirim}\n'
     pesan += f'├Semua Menfess : {db.all_menfess}\n'
-    pesan += f'└Bergabung : {db.sign_up}'
+    pesan += f'└Bergabung : {db.sign_up}\n\n\n'
+    pesan += f' Made With @NekoLocal'
     # Load the image
-    image = Image.open('20230508_142127.jpg')  # Replace with the actual image path
+    image = Image.open('IMG_20230921_162258_638.jpg')  # Replace with the actual image path
 
     # Create a BytesIO stream to save the image
     image_stream = BytesIO()
@@ -128,11 +129,6 @@ async def help_handler(client, msg):
     pesan += '/talent — melihat talent\n'
     pesan += '#NekoBoy / #NekoGirl untuk Mencari Pasangan,Teman , Partner dll #NekoAsk untuk Bertanya #NekoStory untuk Berbagi Cerita #NekoSpill untuk Spill Masalah #NekoFind untuk Mencari Pasangan, Teman, Partner dll'
 
-    # Tambahkan InlineKeyboardButton "JASA" di sini
-    keyboard = [
-        [InlineKeyboardButton("JASA", callback_data="jasa")],
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
 
     if member.status == 'admin':
         pesan += '\nHanya Admin\n'
