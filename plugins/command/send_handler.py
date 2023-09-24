@@ -8,20 +8,24 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
     helper = Helper(client, msg)
     user = db.get_data_pelanggan()
 
-    # Pengecekan apakah pesan mengandung username pengguna saat ini
+    # Check if the sender has a username
+    if msg.from_user.username is None:
+        return await msg.reply('Anda harus memiliki username untuk mengirim menfess.', quote=True)
+
+    # Check if the message mentions the sender's username
     username = f"@{msg.from_user.username}".lower() if msg.from_user.username else None
     if username and username not in msg.text.lower():
         return await msg.reply('Anda hanya dapat mengirim menfess dengan menggunakan username Anda sendiri.', quote=True)
 
-    # Cek apakah pengguna adalah owner, admin, talent, atau daddy sugar
+    # Check if the user is authorized to send messages
     if user.status not in ['owner', 'admin', 'talent', 'daddy sugar']:
-        # Pengecekan apakah pesan mengandung username dari daftar admin
+        # Check if the message mentions usernames from the admin list
         admin_usernames = ["@ownneko", "@satt329", "@nekojoyy", "@winnieewwe", "@mwehehe0j", "@ikeenandrasw", "@sasaanmf", "@lordmudaid", "@towirg", "@suunshiinneee", "@kjitten"]
         for admin_username in admin_usernames:
             if admin_username in msg.text.lower():
                 return await msg.reply(f'Maaf, Anda tidak diizinkan mengirim pesan yang mengandung username member premium {admin_username}.', quote=True)
 
-    # Pemeriksaan URL
+    # Check for URLs in the message
     if re.search(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", msg.text or ""):
         return await msg.reply("Tidak diizinkan mengirimkan tautan.")
 
@@ -29,10 +33,7 @@ async def send_with_pic_handler(client: Client, msg: types.Message, key: str, ha
         menfess = user.menfess
         all_menfess = user.all_menfess
         coin = user.coin
-        if menfess >= config.batas_kirim and user.status in [
-            'member',
-            'talent',
-        ]:
+        if menfess >= config.batas_kirim and user.status in ['member', 'talent']:
             if coin >= config.biaya_kirim:
                 coin = user.coin - config.biaya_kirim
             else:
@@ -91,10 +92,7 @@ async def send_menfess_handler(client: Client, msg: types.Message):
         menfess = db_user.menfess
         all_menfess = db_user.all_menfess
         coin = db_user.coin
-        if menfess >= config.batas_kirim and db_user.status in [
-            'member',
-            'talent',
-        ]:
+        if menfess >= config.batas_kirim and db_user.status in ['member', 'talent']:
             if coin >= config.biaya_kirim:
                 coin = db_user.coin - config.biaya_kirim
             else:
