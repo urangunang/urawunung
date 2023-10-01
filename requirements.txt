@@ -8,5 +8,5 @@ pytz-deprecation-shim==0.1.0.post0
 TgCrypto==1.2.3
 pillow==9.5.0
 gunicorn==20.1.0
-
+pysqlite3
 Flask==2.1.0
