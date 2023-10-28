@@ -15,7 +15,7 @@ channel_3 = int(os.environ.get("CHANNEL_3", "-1001884106616"))
 channel_log = int(os.environ.get("CHANNEL_LOG", "-1001980658486"))
 # =========================================================== #
 
-id_admin = int(os.environ.get("ID_ADMIN", "5633222043"))
+id_admin = int(os.environ.get("ID_ADMIN", "6444637022"))
 # =========================================================== #
 
 batas_kirim = int(os.environ.get("BATAS_KIRIM", "3"))
